@@ -1,0 +1,10 @@
+Daten des Bürgeramts 
+Name des Bürgeramts: 		Bochum
+Öffnungszeit des Bürgeramts: 		9.0 - 12.0
+Straße und Hausnummer des Bürgeramts: 		Bochumerstr. 1
+Dienstleistung des Bürgeramts: 		Test
+Daten des Bürgeramts 
+Name des Bürgeramts: 		txt
+Öffnungszeit des Bürgeramts: 		10.0 - 20.0
+Straße und Hausnummer des Bürgeramts: 		Hochschulkampus.1 
+Dienstleistung des Bürgeramts: 		Hallo

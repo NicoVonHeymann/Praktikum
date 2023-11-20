@@ -46,7 +46,11 @@ public class BuergeraemterControl {
 	    	try {
 	    		if("csv".equals(typ)) {
 	    			this.buergeraemterModel.schreibeBuergeraemterInCsvDatei();
-	    		}else {
+	    		}
+	    		else if("txt".equals(typ)){
+	    			this.buergeraemterModel.schreibeBuergeraemterInTextDatei();
+	    		}
+	    		else {
 	    			buergeraemterView.zeigeInformationsfensterAn("Noch nicht implentiert");
 	    		}
 	    	}
