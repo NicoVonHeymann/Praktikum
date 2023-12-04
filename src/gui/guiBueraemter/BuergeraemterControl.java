@@ -1,19 +1,21 @@
-package gui;
+package gui.guiBueraemter;
 
 import java.io.IOException;
 
+import Observer.Observer;
 import business.BuergeraemterModel;
 import business.Buergeramt;
 import javafx.stage.Stage;
 
-public class BuergeraemterControl {
+public class BuergeraemterControl implements Observer {
 	
 	private BuergeraemterView buergeraemterView;
 	private BuergeraemterModel buergeraemterModel;
 	
 	public BuergeraemterControl(Stage primaryStage) {
-		this.buergeraemterModel = new BuergeraemterModel();
+		this.buergeraemterModel = BuergeraemterModel.getInstance();
 		this.buergeraemterView = new BuergeraemterView(primaryStage, this, this.buergeraemterModel);
+		this.buergeraemterModel.addObserver(this);
 	}
 	
 	
@@ -25,7 +27,8 @@ public class BuergeraemterControl {
 	   	            Float.parseFloat(this.buergeraemterView.getTxtGeoeffnetBis().getText()),
 	   	         this.buergeraemterView.getTxtStrasseHNr().getText(),
 	   	      this.buergeraemterView.getTxtDienstleistungen().getText().split(";")));
-	    		this.buergeraemterView.zeigeInformationsfensterAn("Das Bürgeramt wurde aufgenommen!");
+	    		//this.buergeraemterView.zeigeInformationsfensterAn("Das Bürgeramt wurde aufgenommen!");
+	    		buergeraemterModel.notifyObserver();
 	       	}
 	       	catch(Exception exc){
 	       		this.buergeraemterView.zeigeFehlermeldungsfensterAn(exc.getMessage());
@@ -58,5 +61,12 @@ public class BuergeraemterControl {
 				buergeraemterView.zeigeFehlermeldungAn("Unbekannter Fehler beim Speichern!");
 			}
 	    }
+
+
+		@Override
+		public void update() {
+			zeigeBuergeraemterAn();
+			
+		}
 
 }
