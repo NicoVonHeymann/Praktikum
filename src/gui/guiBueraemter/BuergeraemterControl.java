@@ -21,7 +21,7 @@ public class BuergeraemterControl implements Observer {
 	
 	 void nehmeBuergeramtAuf(){
 	    	try{
-	    		this.buergeraemterModel.setBuergeramt( new Buergeramt(
+	    		this.buergeraemterModel.addBuergeramt( new Buergeramt(
 	    			this.buergeraemterView.getTxtName().getText(), 
 	   	            Float.parseFloat(this.buergeraemterView.getTxtGeoeffnetVon().getText()),
 	   	            Float.parseFloat(this.buergeraemterView.getTxtGeoeffnetBis().getText()),
@@ -37,8 +37,12 @@ public class BuergeraemterControl implements Observer {
 	   
 	    void zeigeBuergeraemterAn(){
 	    	if(this.buergeraemterModel.getBuergeramt() != null){
+	    		String ausgabe = "";
+	    		for (Buergeramt buergeramt : this.buergeraemterModel.getBuergeramt()) {
+					ausgabe += buergeramt.gibBuergeramtZurueck(' ');
+				}
 	    		this.buergeraemterView.getTxtAnzeige().setText(
-	    				this.buergeraemterModel.getBuergeramt().gibBuergeramtZurueck(' '));
+	    				ausgabe);
 	    	}
 	    	else{
 	    		this.buergeraemterView.zeigeInformationsfensterAn("Bisher wurde kein Bürgeramt aufgenommen!");

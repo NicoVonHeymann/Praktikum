@@ -14,12 +14,12 @@ import fabrik.TextCreator;
 import javafx.beans.InvalidationListener;
 
 public class BuergeraemterModel implements Observable {
-	private Buergeramt  buergeramt;
+	private ArrayList<Buergeramt>  buergeramt =  new ArrayList<Buergeramt>();
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	
 	private static BuergeraemterModel instance = null;
 
-	public Buergeramt getBuergeramt() {
+	public ArrayList<Buergeramt> getBuergeramt() {
 		return buergeramt;
 	}
 	
@@ -34,8 +34,8 @@ public class BuergeraemterModel implements Observable {
 		return instance;
 	}
 
-	public void setBuergeramt(Buergeramt buergeramt) {
-		this.buergeramt = buergeramt;
+	public void addBuergeramt(Buergeramt buergeramt) {
+		this.buergeramt.add(buergeramt);
 	}
 	
 	public void schreibeBuergeraemterInCsvDatei() throws IOException {

@@ -136,6 +136,7 @@ public class BuergeraemterView {
             	buergeraemterControl.nehmeBuergeramtAuf();
             }
 	    });
+	    
 	    btnAnzeige.setOnAction(new EventHandler<ActionEvent>() {
 	    	@Override
 	        public void handle(ActionEvent e) {
@@ -143,31 +144,22 @@ public class BuergeraemterView {
 	        } 
    	    });
 	    
-	    mnItmCsvExport.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent e) {
-				try {
-					schreibeBuergeraemterInDatei("csv");
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
+	    mnItmCsvExport.setOnAction(event -> {
+	    	try {
+			schreibeBuergeraemterInDatei("csv");
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}});
 	    
-	    mnItmTxtExport.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent e) {
-				try {
-					schreibeBuergeraemterInDatei("txt");
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
+	    mnItmTxtExport.setOnAction(event -> {
+	    	try {
+			schreibeBuergeraemterInDatei("txt");
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}});
+	    
     }
     
     

@@ -1,6 +1,7 @@
 package gui.guiSteatischeEinrichtung;
 
 import business.BuergeraemterModel;
+import business.Buergeramt;
 import javafx.event.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -77,9 +78,12 @@ public class StaedtischeEinrichtungenView {
    
     public void zeigeBuergeraemterAn(){
     		if(buergeraemterModel.getBuergeramt() != null){
+    			String ausgabe = "";
+	    		for (Buergeramt buergeramt : this.buergeraemterModel.getBuergeramt()) {
+					ausgabe += buergeramt.gibBuergeramtZurueck(' ');
+				}
     			txtAnzeigeBuergeraeamter.setText(
-    					buergeraemterModel.getBuergeramt()
- 				.gibBuergeramtZurueck(' '));
+    					ausgabe);
     		}
     		else{
     			zeigeInformationsfensterAn(

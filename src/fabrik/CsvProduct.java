@@ -3,6 +3,8 @@ package fabrik;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import business.Buergeramt;
 
@@ -17,9 +19,12 @@ public class CsvProduct  extends Product {
 	
 	@Override
 	public void fuegeInDateiHinzu(Object object) {
-		Buergeramt burg = (Buergeramt) object;
+		ArrayList<Buergeramt> burg = (ArrayList<Buergeramt>) object;
 		try {
-			writer.write(burg.gibBuergeramtZurueck(';'));
+			for (Buergeramt buergeramt : burg) {
+				writer.write(buergeramt.gibBuergeramtZurueck(';'));
+			}
+		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
