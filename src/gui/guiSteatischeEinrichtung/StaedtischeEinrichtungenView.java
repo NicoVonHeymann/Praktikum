@@ -1,7 +1,11 @@
 package gui.guiSteatischeEinrichtung;
 
+import java.io.IOException;
+
 import business.BuergeraemterModel;
 import business.Buergeramt;
+import business.sporthallen.Sporthalle;
+import business.sporthallen.SporthalleModel;
 import javafx.event.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -19,19 +23,25 @@ public class StaedtischeEinrichtungenView {
     	private Pane pane = new  Pane();
     	private Label lblAnzeigeBuergeraeamter     
  		= new Label("Anzeige Bürgerämter");
+    	private TextArea txtAnzeigeSporthalle  = new TextArea();
     	private TextArea txtAnzeigeBuergeraeamter  = new TextArea();
     	private Button btnAnzeigeBuergeraeamter = new Button("Anzeige");
+    	private Button csvImportSporthallen = new Button("csv-import und Anzeigen");
+
     	//-------Ende Attribute der grafischen Oberflaeche-------
     	
     	private BuergeraemterModel buergeraemterModel;
+    	private SporthalleModel sporthalleModel;
     	private SteadtischeEinichtungenControl steadtischeEinichtungenControl;
+    	
     
-    	public StaedtischeEinrichtungenView(Stage primaryStage, SteadtischeEinichtungenControl steadtischeEinichtungenControl, BuergeraemterModel buergeraemterModel){
+    	public StaedtischeEinrichtungenView(Stage primaryStage, SteadtischeEinichtungenControl steadtischeEinichtungenControl, BuergeraemterModel buergeraemterModel, SporthalleModel sporthalleModel){
     		Scene scene = new Scene(this.pane, 560, 340);
     		primaryStage.setScene(scene);
     		primaryStage.setTitle("Anzeige von städtischen " 
  			+ "Einrichtungen");
     		primaryStage.show();
+    		this.sporthalleModel = sporthalleModel;
     		this.buergeraemterModel = buergeraemterModel;
     		this.steadtischeEinichtungenControl = steadtischeEinichtungenControl;
     		
@@ -39,7 +49,22 @@ public class StaedtischeEinrichtungenView {
 
 
 		this.initKomponenten();
+		this.initKomponentenSporthalle();
 		this.initListener();
+		this.initListenerSporthalle();
+    	}
+    	
+    	private void initKomponentenSporthalle() {
+    		txtAnzeigeSporthalle.setEditable(false);
+           	txtAnzeigeSporthalle.setLayoutX(10);
+           	txtAnzeigeSporthalle.setLayoutY(90);
+           	txtAnzeigeSporthalle.setPrefWidth(220);
+           	txtAnzeigeSporthalle.setPrefHeight(185);
+           	pane.getChildren().add(txtAnzeigeSporthalle);
+
+           	csvImportSporthallen.setLayoutX(10);
+        	csvImportSporthallen.setLayoutY(290);
+            pane.getChildren().add(csvImportSporthallen); 
     	}
 
     	private void initKomponenten(){
@@ -53,17 +78,23 @@ public class StaedtischeEinrichtungenView {
         	
 
 
-// Textbereich	
+       	// Textbereich
        	txtAnzeigeBuergeraeamter.setEditable(false);
        	txtAnzeigeBuergeraeamter.setLayoutX(310);
        	txtAnzeigeBuergeraeamter.setLayoutY(90);
        	txtAnzeigeBuergeraeamter.setPrefWidth(220);
        	txtAnzeigeBuergeraeamter.setPrefHeight(185);
-       	pane.getChildren().add(txtAnzeigeBuergeraeamter);        	
+       	
+       	
+       	
+       	
+       	pane.getChildren().add(txtAnzeigeBuergeraeamter);
         	// Button
        	btnAnzeigeBuergeraeamter.setLayoutX(310);
        	btnAnzeigeBuergeraeamter.setLayoutY(290);
         	pane.getChildren().add(btnAnzeigeBuergeraeamter); 
+        	
+   
    }
    
    private void initListener() {
@@ -74,7 +105,24 @@ public class StaedtischeEinrichtungenView {
 	            	zeigeBuergeraemterAn();
 	        	} 
    	    });
+	   
+	  
     }
+   
+   private void initListenerSporthalle() {
+	   csvImportSporthallen.setOnAction(
+	 			new EventHandler<ActionEvent>() {
+		    		@Override
+		        	public void handle(ActionEvent e) {
+		    			try {
+							csvImportUndAnzeige();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+		        	} 
+	   	    });
+   }
    
     public void zeigeBuergeraemterAn(){
     		if(buergeraemterModel.getBuergeramt() != null){
@@ -90,10 +138,28 @@ public class StaedtischeEinrichtungenView {
  				"Bisher wurde kein Bürgeramt aufgenommen!");
     		}
     }	
+    
+    public void csvImportUndAnzeige() throws IOException{
+    	this.sporthalleModel.leseSporthalleAusCsvDatei();
+		if(sporthalleModel.getSporthallen() != null){
+			String ausgabe = "";
+    		for (Sporthalle sporthalle : sporthalleModel.getSporthallen()) {
+				ausgabe += sporthalle.gibSporthalleZurueck(' ');
+			}
+			this.txtAnzeigeSporthalle.setText(
+					ausgabe);
+		}
+		else{
+			zeigeInformationsfensterAn(
+				"Bisher wurde kein sporthalle aufgenommen!");
+		}
+}
    
     private void zeigeInformationsfensterAn(String meldung){
     	  	new MeldungsfensterAnzeiger(AlertType.INFORMATION,
                	"Information", meldung).zeigeMeldungsfensterAn();
     }	
+    
+    
     
 }
